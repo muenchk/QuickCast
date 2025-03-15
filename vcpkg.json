@@ -1,0 +1,13 @@
+{
+  "name": "example",
+  "version": "1",
+  "dependencies": [
+    "boost-stl-interfaces",
+    "boost-unordered",
+    "boost-bimap",
+    "rsm-binary-io",
+    "spdlog",
+    "rapidcsv",
+    "xbyak"
+  ]
+}
