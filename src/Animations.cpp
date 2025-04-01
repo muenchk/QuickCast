@@ -79,6 +79,16 @@ void Animations::EquippedPreRight(std::shared_ptr<AnimationInfo> event)
 void Animations::EquippedPostLeft(std::shared_ptr<AnimationInfo> event)
 {
 	loginfo("");
+
+	if (event->sheathed)
+	{
+		if (auto act = event->acinfo->GetActor(); act != nullptr)
+		{
+			act->DrawWeaponMagicHands(false);
+			event->sheathed = false;
+		}
+	}
+
 	if (event->equippedleft) {
 		if (auto spell = event->equippedleft->As<RE::SpellItem>(); spell != nullptr) {
 			loginfo("{}", Utility::PrintForm(spell));
@@ -96,6 +106,14 @@ void Animations::EquippedPostLeft(std::shared_ptr<AnimationInfo> event)
 void Animations::EquippedPostRight(std::shared_ptr<AnimationInfo> event)
 {
 	loginfo("");
+
+	if (event->sheathed) {
+		if (auto act = event->acinfo->GetActor(); act != nullptr) {
+			act->DrawWeaponMagicHands(false);
+			event->sheathed = false;
+		}
+	}
+
 	if (event->equippedright) {
 		if (auto spell = event->equippedright->As<RE::SpellItem>(); spell != nullptr) {
 			loginfo("{}", Utility::PrintForm(spell));
@@ -112,6 +130,13 @@ void Animations::EquippedPostRight(std::shared_ptr<AnimationInfo> event)
 
 void Animations::EquippedPostDual(std::shared_ptr<AnimationInfo> event)
 {
+	if (event->sheathed) {
+		if (auto act = event->acinfo->GetActor(); act != nullptr) {
+			act->DrawWeaponMagicHands(false);
+			event->sheathed = false;
+		}
+	}
+
 	event->acinfo->ResetAnimationStatusLeft();
 	event->acinfo->ResetAnimationStatusRight();
 	event->Clear();
@@ -127,7 +152,16 @@ bool SpellHandlerLeft(std::shared_ptr<AnimationInfo> event)
 	auto leftobject = event->acinfo->GetEquippedObject(true);
 	loginfo("got left object");
 
-	if (leftobject->GetFormID() == event->spell->GetSpell()->GetFormID()) {
+	event->acinfo->UpdateWeaponsDrawn();
+	if (event->acinfo->IsWeaponDrawn() == false)
+	{
+		if (auto act = event->acinfo->GetActor(); act != nullptr) {
+			event->sheathed = true;
+			act->DrawWeaponMagicHands(true);
+		}
+	}
+
+	if (leftobject && leftobject->GetFormID() == event->spell->GetSpell()->GetFormID()) {
 		// already equipped
 		loginfo("Spell already equipped");
 		return false;
@@ -171,7 +205,16 @@ bool SpellHandlerRight(std::shared_ptr<AnimationInfo> event)
 {
 	auto rightobject = event->acinfo->GetEquippedObject(false);
 	loginfo("got right object");
-	if (rightobject->GetFormID() == event->spell->GetSpell()->GetFormID()) {
+
+	event->acinfo->UpdateWeaponsDrawn();
+	if (event->acinfo->IsWeaponDrawn() == false) {
+		if (auto act = event->acinfo->GetActor(); act != nullptr) {
+			event->sheathed = true;
+			act->DrawWeaponMagicHands(true);
+		}
+	}
+
+	if (rightobject && rightobject->GetFormID() == event->spell->GetSpell()->GetFormID()) {
 		// already equipped
 		loginfo("Spell already equipped");
 		return false;

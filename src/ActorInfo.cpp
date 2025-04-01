@@ -708,7 +708,7 @@ void ActorInfo::CastSpellImmediate(RE::SpellItem* spell, RE::Actor* target, RE::
 	if (!valid || dead)
 		return;
 	if (actor.get() && actor.get().get()) {
-		actor.get().get()->GetMagicCaster(castsource)->CastSpellImmediate(spell, false, target, 100, false, false, actor.get().get());
+		actor.get().get()->GetMagicCaster(castsource)->CastSpellImmediate(spell, false, target, 1, false, false, actor.get().get());
 	}
 }
 

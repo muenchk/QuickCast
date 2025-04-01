@@ -68,6 +68,7 @@ public:
 	std::shared_ptr<ActorInfo> acinfo;
 	std::shared_ptr<SpellInfo> spell;
 
+	bool sheathed = false;
 	RE::TESForm* equippedleft = nullptr;
 	RE::TESForm* equippedright = nullptr;
 	bool equippedTwoHanded = false;
