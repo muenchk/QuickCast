@@ -7,7 +7,7 @@ using Comp = Compatibility;
 
 void Settings::Load()
 {
-	constexpr auto path = L"Data/SKSE/Plugins/NPCsUsePotions.ini";
+	constexpr auto path = L"Data/SKSE/Plugins/QuickCastHotkeys.ini";
 
 	bool Ultimateoptions = false;
 
@@ -52,7 +52,7 @@ void Settings::Save()
 	// reset change flag
 	Settings::_modifiedSettings = Settings::ChangeFlag::kNone;
 
-	constexpr auto path = L"Data/SKSE/Plugins/NPCsUsePotions.ini";
+	constexpr auto path = L"Data/SKSE/Plugins/QuickCastHotkeys.ini";
 
 	CSimpleIniA ini;
 
