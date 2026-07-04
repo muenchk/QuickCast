@@ -1,10 +1,8 @@
 #include "Hooks.h"
 #include "Events.h"
 #include "Settings.h"
-#include "Game.h"
 #include "DataStorage.h"
 #include "Compatibility.h"
-#include "Logging.h"
 
 #include <string>
 #include <ShlObj_core.h>
@@ -20,7 +18,10 @@ namespace
 		}
 		Settings::log_directory = path.value();
 		Logging::log_directory = Settings::log_directory;
-		Logging::InitializeLog(Settings::log_directory, Settings::PluginNamePlain, false, false);
+
+		Log::Init(Settings::PluginNamePlain, false);
+		Profile::Init(Settings::PluginNamePlain);
+		Logging::BeginLogging();
 
 
 		/*
@@ -95,6 +96,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 
 void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
 {
+	LibSUtilsSetup::MessageHandler(a_msg);
 	StartProfiling;
 	switch (a_msg->type) {
 	case SKSE::MessagingInterface::kPreLoadGame:
@@ -137,7 +139,7 @@ void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
 		// register console commands
 		//Console::RegisterConsoleCommands();
 		//loginfo("Registered Console Commands");
-		profile(TimeProfiling, "DataLoad execution time.");
+		logprofile(TimeProfiling, "DataLoad execution time.");
 		break;
 	case SKSE::MessagingInterface::kPostLoad:
 		//Settings::Interfaces::RequestAPIs();
@@ -154,7 +156,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	loginfo("Game Version: {}", a_skse->RuntimeVersion().string());
 
 	loginfo("{} v{}", Plugin::NAME, Plugin::VERSION.string());
-	profile(std::chrono::steady_clock::now(), "{} v{}"sv, Plugin::NAME, Plugin::VERSION.string());
+	logprofile(std::chrono::steady_clock::now(), "{} v{}"sv, Plugin::NAME, Plugin::VERSION.string());
 	logusage("{} v{}"sv, Plugin::NAME, Plugin::VERSION.string());
 
 	SKSE::Init(a_skse);
@@ -182,6 +184,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	//SKSE::GetPapyrusInterface()->Register(Papyrus::Register);
 
 	Hooks::InstallHooks();
+	LibSUtilsSetup::InstallHooks();
 
 	return true;
 }

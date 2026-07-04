@@ -1,7 +1,6 @@
 #include "SpellInfo.h"
 #include "Settings.h"
 #include "ActorInfo.h"
-#include "Logging.h"
 #include "Events.h"
 #include "Animations.h"
 

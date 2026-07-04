@@ -1,6 +1,4 @@
 #include "DataStorage.h"
-#include "Logging.h"
-#include "Game.h"
 #include "Events.h"
 #include "Data.h"
 #include "Utility.h"
@@ -138,7 +136,7 @@ namespace Storage
 			Events::Main::UnlockProcessing();
 			loginfo("[DataStorage] [ReadData] Enable processing");
 		}
-		profile(TimeProfiling, "function execution time.");
+		profile(__func__, TimeProfiling, "function execution time.");
 	}
 
 	/// <summary>
@@ -168,7 +166,7 @@ namespace Storage
 			loginfo("[DataStorage] [WriteData] Enable processing");
 		}
 
-		profile(TimeProfiling, "function execution time.");
+		profile(__func__, TimeProfiling, "function execution time.");
 	}
 
 	/// <summary>

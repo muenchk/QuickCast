@@ -13,11 +13,8 @@
 #include <deque>
 
 #include "Events.h"
-#include "Game.h"
 #include "Settings.h"
-#include "Threading.h"
 #include "Utility.h"
-#include "VM.h"
 #include "SpellInfo.h"
 #include "AnimationEvents.h"
 		
@@ -141,7 +138,7 @@ namespace Events
 			}
 		}
 TESDeathEventEnd:
-		profile(TimeProfiling, "[TESDeathEvent] event execution time.");
+		logprofile(TimeProfiling, "[TESDeathEvent] event execution time.");
 		return EventResult::kContinue;
 	}
 
@@ -179,7 +176,7 @@ TESDeathEventEnd:
 				acinfo->SetCombatState(CombatState::OutOfCombat);
 
 		}
-		profile(TimeProfiling, "[TESCombatEvent] event execution time");
+		logprofile(TimeProfiling, "[TESCombatEvent] event execution time");
 		return EventResult::kContinue;
 	}
 
@@ -207,7 +204,7 @@ TESDeathEventEnd:
 						handle.Play();
 					}
 				}
-				profile(TimeProfiling, "[TESEquipEvent] event execution time.");
+				logprofile(TimeProfiling, "[TESEquipEvent] event execution time.");
 			}
 		}
 

@@ -14,7 +14,6 @@
 #include <unordered_map>
 #include "Data.h"
 #include "Compatibility.h"
-#include "Logging.h"
 
 using Comp = Compatibility;
 
@@ -43,36 +42,6 @@ static std::uniform_int_distribution<signed> rand100(1, 100);
 
 void Settings::InitGameStuff()
 {
-	loginfo("Load Game Stuff");
-	RE::TESDataHandler* datahandler = RE::TESDataHandler::GetSingleton();
-	const RE::TESFile* file = nullptr;
-	uint32_t index = 0;
-	for (int i = 0; i <= 254; i++) {
-		file = datahandler->LookupLoadedModByIndex((uint8_t)i);
-		if (file) {
-			pluginnames[i] = std::string(file->GetFilename());
-			index = (uint32_t)i << 24;
-			pluginNameMap.insert_or_assign(pluginnames[i], index);
-			pluginIndexMap.insert_or_assign(index, pluginnames[i]);
-		} else
-			pluginnames[i] = "";
-	}
-	// 0xFF... is reserved for objects created by the game during runtime 
-	pluginnames[255] = "runtime";
-	for (int i = 0; i <= 4095; i++) {
-		file = datahandler->LookupLoadedLightModByIndex((uint16_t)i);
-		if (file) {
-			pluginnames[256 + i] = std::string(file->GetFilename());
-			index = 0xFE000000 | ((uint32_t)i << 12);
-			pluginNameMap.insert_or_assign(pluginnames[256 + i], index);
-			pluginIndexMap.insert_or_assign(index, pluginnames[256 + i]);
-		} else
-			pluginnames[256 + i] = "";
-	}
-	for (auto& [name, id] : pluginNameMap)
-		loginfo("ID: {:3}, Name:{}", Utility::GetHex(id), name);
-
-	
 	Settings::ActorTypeDwarven = RE::TESForm::LookupByID<RE::BGSKeyword>(0x1397A);
 	if (Settings::ActorTypeDwarven == nullptr) {
 		loginfo("[INIT] Couldn't find ActorTypeDwarven Keyword in game.");
@@ -110,7 +79,6 @@ void Settings::InitGameStuff()
 
 	loginfo("Finished");
 }
-
 
 void Settings::UpdateSettings()
 {

@@ -1,5 +1,4 @@
 #include "Settings.h"
-#include "Logging.h"
 #include "Utility.h"
 #include "Compatibility.h"
 
@@ -37,7 +36,7 @@ void Settings::Load()
 		Logging::EnableLog = Debug::EnableLog;
 		loginfo("Setting: {} {}", "Debug:             EnableLogging", std::to_string(Debug::EnableLog));
 		Debug::EnableProfiling = ini.GetBoolValue("Debug", "EnableProfiling", Debug::EnableProfiling);
-		Logging::EnableProfile = Debug::EnableProfiling;
+		Logging::EnableProfiling = Debug::EnableProfiling;
 		loginfo("Setting: {} {}", "Debug:             EnableProfiling", std::to_string(Debug::EnableProfiling));
 
 	}

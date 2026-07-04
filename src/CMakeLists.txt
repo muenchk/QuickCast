@@ -97,13 +97,13 @@ target_include_directories(
 		"${SOURCE_DIR}"
 )
 
-
-add_subdirectory($ENV{CommonLibNGPath} CommonLibSSE EXCLUDE_FROM_ALL)
+add_subdirectory($ENV{LibSUtilPath} LibSUtils EXCLUDE_FROM_ALL)
 
 target_link_libraries(
 	"${PROJECT_NAME}"
 	PRIVATE
 		CommonLibSSE::CommonLibSSE
+		LibSUtils::LibSUtils
 )
 
 target_precompile_headers(

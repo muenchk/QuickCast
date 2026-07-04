@@ -7,11 +7,8 @@
 
 #include "Animations.h"
 #include "Events.h"
-#include "Game.h"
-#include "Logging.h"
 #include "Settings.h"
 #include "Utility.h"
-#include "BufferOperations.h"
 #include "AnimationEvents.h"
 #include "ActorInfo.h"
 
@@ -243,7 +240,7 @@ namespace Events
 		InitializeCompatibilityObjects();
 
 		// get the MCM quest and start it if its not running
-		if (Utility::Mods::GetPluginIndex(Settings::PluginName) != 0x1) {
+		if (Mods::GetPluginIndex(Settings::PluginName) != 0x1) {
 			RE::TESForm* form = Data::GetSingleton()->FindForm(0x800, Settings::PluginName);
 			if (form) {
 				RE::TESQuest* q = form->As<RE::TESQuest>();
@@ -256,7 +253,7 @@ namespace Events
 		PlayerAnimationHandler::RegisterEvents(RE::PlayerCharacter::GetSingleton());
 
 		loginfo("end");
-		profile(TimeProfiling, "function execution time");
+		logprofile(TimeProfiling, "function execution time");
 	}
 
 	/// <summary>
@@ -282,8 +279,8 @@ namespace Events
 		for (auto& handle : deads) {
 			if (RE::Actor* actor = handle.get().get(); actor != nullptr) {
 				RE::FormID id = actor->GetFormID();
-				uint32_t formid = Utility::Mods::GetIndexLessFormID(id);
-				std::string pluginname = Utility::Mods::GetPluginNameFromID(id);
+				uint32_t formid = Mods::GetIndexLessFormID(id);
+				std::string pluginname = Mods::GetPluginNameFromID(id);
 				if (a_intfc->OpenRecord('EDID', 0)) {
 					// get entry length
 					int length = 4 + Buffer::CalcStringLength(pluginname);

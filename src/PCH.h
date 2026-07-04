@@ -13,6 +13,10 @@
 #endif
 #pragma warning(pop)
 
+#include <LibSUtils/LibSUtils.h>
+
+using namespace LibSUtils;
+
 using namespace std::literals;
 
 namespace logger = SKSE::log;

@@ -1,5 +1,4 @@
 #include "Animations.h"
-#include "Logging.h"
 #include "AnimationEvents.h"
 #include "SpellInfo.h"
 #include "Settings.h"

@@ -1,13 +1,25 @@
 {
-  "name": "example",
+  "name": "quickcast",
   "version": "1",
   "dependencies": [
+    "directxtex",
+    "freetype",
+    "glaze",
     "boost-stl-interfaces",
     "boost-unordered",
     "boost-bimap",
+    "boost-circular-buffer",
     "rsm-binary-io",
+    "nlohmann-json",
     "spdlog",
     "rapidcsv",
-    "xbyak"
+    "xbyak",
+    "srell",
+    "stb",
+    "lunasvg",
+    {
+      "name": "imgui",
+      "features": [ "dx11-binding", "win32-binding", "freetype", "wchar32" ]
+    }
   ]
 }

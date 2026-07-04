@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SimpleIni.h"
 #include <fstream>
 #include <iostream>
 #include <type_traits>
@@ -146,11 +145,6 @@ public:
 	// intern
 public:
 
-	static inline std::string pluginnames[256+4096];
-	static inline std::unordered_map<std::string, uint32_t> pluginNameMap;
-	static inline std::unordered_map<uint32_t, std::string> pluginIndexMap;
-
-	
 	static inline RE::BGSKeyword* ActorTypeDwarven;
 	static inline RE::BGSKeyword* ActorTypeCreature;
 	static inline RE::BGSKeyword* ActorTypeAnimal;

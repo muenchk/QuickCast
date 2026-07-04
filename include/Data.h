@@ -6,7 +6,6 @@
 
 #include "ActorInfo.h"
 #include "SpellInfo.h"
-#include "BufferOperations.h"
 
 struct Hotkey
 {
@@ -29,7 +28,7 @@ public:
 	bool ReadData(unsigned char* buffer, size_t& offset, size_t length);
 };
 
-class Data
+class Data : public DataBase
 {
 private:
 	/// <summary>
@@ -54,11 +53,6 @@ private:
 	std::unordered_set<uint32_t> rejectedSpells;
 
 	std::unordered_map<uint32_t, std::shared_ptr<Hotkey>> hotkeyMap;
-
-	/// <summary>
-	/// datahandler
-	/// </summary>
-	RE::TESDataHandler* datahandler = nullptr;
 
 	/// <summary>
 	/// Creates a new shared pointer to an ActorInfo and inserts it into the map and valid actors

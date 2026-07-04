@@ -3,14 +3,12 @@
 #include <iterator>
 
 #include "Data.h"
-#include "Logging.h"
 #include "Utility.h"
-#include "BufferOperations.h"
 #include "Events.h"
 
 void Data::Init()
 {
-	datahandler = RE::TESDataHandler::GetSingleton();
+	DataBase::Init();
 }
 
 Data* Data::GetSingleton()
@@ -242,8 +240,8 @@ long Data::SaveDeletedActors(SKSE::SerializationInterface* a_intfc)
 	long successfulwritten = 0;
 
 	for (auto actorid : deletedActors) {
-		uint32_t formid = Utility::Mods::GetIndexLessFormID(actorid);
-		std::string pluginname = Utility::Mods::GetPluginNameFromID(actorid);
+		uint32_t formid = Mods::GetIndexLessFormID(actorid);
+		std::string pluginname = Mods::GetPluginNameFromID(actorid);
 		if (a_intfc->OpenRecord('DAID', 0)) {
 			// get entry length
 			int length = 4 + Buffer::CalcStringLength(pluginname);
@@ -600,9 +598,9 @@ bool Hotkey::WriteData(unsigned char* buffer, size_t& offset)
 	Buffer::Write(key, buffer, offset);
 	Buffer::Write((uint32_t)origin, buffer, offset);
 	Buffer::Write(dualCast, buffer, offset);
-	Buffer::Write(Utility::Mods::GetIndexLessFormID(form->GetFormID()), buffer, offset);
+	Buffer::Write(Mods::GetIndexLessFormID(form->GetFormID()), buffer, offset);
 	Buffer::Write(plugin, buffer, offset);
-	loginfo("{}~{}", Utility::GetHex(Utility::Mods::GetIndexLessFormID(form->GetFormID())), plugin);
+	loginfo("{}~{}", Utility::GetHex(Mods::GetIndexLessFormID(form->GetFormID())), plugin);
 	return true;
 }
 bool Hotkey::ReadData(unsigned char* buffer, size_t& offset, size_t length)
@@ -625,7 +623,7 @@ bool Hotkey::ReadData(unsigned char* buffer, size_t& offset, size_t length)
 }
 uint32_t Hotkey::GetDataSize()
 {
-	plugin = Utility::Mods::GetPluginNameFromID(form->GetFormID());
+	plugin = Mods::GetPluginNameFromID(form->GetFormID());
 	return 4 /*version*/ + 4 /*key*/ + 4 /*origin*/ + 1 /*dualCast*/ + 4 /*formid*/ + Buffer::CalcStringLength(plugin);
 }
 

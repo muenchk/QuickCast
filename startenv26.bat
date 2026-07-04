@@ -1,0 +1,1 @@
+start %comspec% /k "D:\Program Files\Microsoft Visual Studio 18\VC\Auxiliary\Build\vcvars64.bat"
