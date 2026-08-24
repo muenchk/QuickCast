@@ -424,7 +424,7 @@ namespace Events
 	{
 		RE::BSSoundHandle handle;
 		if (soundDesc) {
-			Events::Main::audiomanager->BuildSoundDataFromDescriptor(handle, soundDesc);
+			Events::Main::audiomanager->GetSoundHandle(handle, soundDesc);
 			handle.SetObjectToFollow(acinfo->GetActor()->Get3D());
 			handle.SetVolume(1.0);
 			handle.Play();
